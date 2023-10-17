@@ -4,18 +4,28 @@ import sys
 
 pygame.init()
 
-HEIGHT = 800
-WIDTH = 600
+HEIGHT = 600
+WIDTH = 700
 
-screen = pygame.display.set_mode((HEIGHT,WIDTH))
+screen = pygame.display.set_mode((WIDTH,HEIGHT))
 FPS = pygame.time.Clock()
 
-water = pygame.Surface((HEIGHT,WIDTH))
+fish1 = pygame.image.load("images/fishTile_072.png").convert()
+fish1x = 100
+fish1y = 100
+
+sand_height = 100
+
 
 running = True
 
+def moveFish()
+    
+
 while running:
-    pygame.Surface.fill(water,'blue')
+    screen.fill((212, 241, 249))
+    pygame.draw.rect(screen, (194, 178, 128), (0, HEIGHT-sand_height, WIDTH, sand_height))
+    screen.blit(fish1,(100,100))
 
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -24,5 +34,4 @@ while running:
 
 
     pygame.display.flip()
-    pygame.display.update()
     FPS.tick(60)
