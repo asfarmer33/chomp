@@ -44,3 +44,12 @@ def make_background(screen):
         background.blit(plant, (plantx, planty))
 
     return background
+
+
+def center_surfaces(fs, bs):
+    fg_width = fs.get_width()
+    fg_height = fs.get_height()
+    bg_width = bs.get_width()
+    bg_height = bs.get_height()
+
+    bs.blit(fs, (bg_width / 2 - fg_width / 2, bg_height / 2 - fg_height / 2))
