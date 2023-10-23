@@ -46,7 +46,7 @@ def make_background(screen):
     return background
 
 
-def center_surfaces(fs, bs):
+def center_surfaces(fs, bs): # takes two surfaces and centers one on the other
     fg_width = fs.get_width()
     fg_height = fs.get_height()
     bg_width = bs.get_width()
