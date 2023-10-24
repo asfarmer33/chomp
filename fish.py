@@ -5,9 +5,9 @@ class Fish(pygame.sprite.Sprite):
 
     def __init__(self, screen):
         super().__init__()
-        images = ["images/fishTile_079.png", "images/fishTile_081.png", "images/fishTile_075.png"]
+        images = ["images/fishTile_079.png", "images/fishTile_081.png", "images/fishTile_075.png", "images/fishTile_077.png"]
         self.speed = random.random()*5
-        self.image = pygame.image.load(images[random.randint(0,2)])
+        self.image = pygame.image.load(images[random.randint(0,3)])
         self.image = pygame.transform.flip(self.image, 1, 0)
         self.rect = self.image.get_rect()
         self.x = screen.get_width()
