@@ -1,23 +1,25 @@
 import random
 import pygame
 
-class Fish():
+class Fish(pygame.sprite.Sprite):
 
     def __init__(self, screen):
+        super().__init__()
         images = ["images/fishTile_079.png", "images/fishTile_081.png", "images/fishTile_075.png"]
         self.speed = random.random()*5
+        self.image = pygame.image.load(images[random.randint(0,2)])
+        self.image = pygame.transform.flip(self.image, 1, 0)
+        self.rect = self.image.get_rect()
         self.x = screen.get_width()
-        self.img = pygame.image.load(images[random.randint(0,2)])
-        #self.img = pygame.image.load("images/fishTile_079.png")
-        self.img = pygame.transform.flip(self.img, 1, 0)
-        self.y = random.randint(0, screen.get_height() - self.img.get_height())
+        self.rect.x = self.x
+        self.y = random.randint(0, screen.get_height() - self.image.get_height())
+        self.rect.y = self.y
         self.screen = screen
 
     def update(self):
-        if self.x < 0-self.img.get_width():
+        if self.x < 0-self.image.get_width():
             self.x = self.screen.get_width()
-            self.y = random.randint(0, self.screen.get_height()-self.img.get_height())
+            self.y = random.randint(0, self.screen.get_height()-self.image.get_height())
         self.x -= self.speed
-
-    def draw(self):
-        self.screen.blit(self.img, (self.x, self.y))
+        self.rect.x = self.x
+        self.rect.y = self.y
