@@ -51,7 +51,6 @@ while running:
             if event.key == pygame.K_LEFT:
                 my_boat.velocity -= 1
             if event.key == pygame.K_DOWN:
-                grenade_group = pygame.sprite.Group()
                 grenade_group.add(Grenade(screen, my_boat))
 
 
