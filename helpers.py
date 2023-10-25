@@ -19,9 +19,9 @@ def make_background(screen):
     tile_height = water_tile.get_height()
     for x in range(0, WIDTH, tile_width):
         for y in range(0, HEIGHT, tile_height):
-            if y == 0:
+            if y == tile_height:
                 background.blit(water_top_tile, (x, y))
-            else:
+            elif y > tile_height:
                 background.blit(water_tile, (x, y))
 
     # draw sand tiles

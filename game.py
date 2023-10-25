@@ -51,7 +51,10 @@ while running:
             if event.key == pygame.K_LEFT:
                 my_boat.velocity -= 1
             if event.key == pygame.K_DOWN:
-                grenade_group.add(Grenade(screen, my_boat))
+                if len(grenade_group) < 4:
+                    grenade_group.add(Grenade(screen, my_boat))
+            if event.key == pygame.K_SPACE:
+                [grenade.boom() for grenade in grenade_group]
 
 
 
@@ -62,9 +65,13 @@ while running:
     boat_group.update()
     grenade_group.update()
 
+    [grenade.hit_bottom() for grenade in grenade_group]
+
     # draw background
     screen.blit(background, (0, 0))
-    center_surfaces(text, background)
+    if pygame.time.get_ticks() < 3000:
+        center_surfaces(text, screen)
+
 
     # draw
     fish_group.draw(screen)

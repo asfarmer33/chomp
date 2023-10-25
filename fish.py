@@ -12,14 +12,14 @@ class Fish(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.x = screen.get_width()
         self.rect.x = self.x
-        self.y = random.randint(0, screen.get_height() - self.image.get_height())
+        self.y = random.randint(100, screen.get_height() - self.image.get_height())
         self.rect.y = self.y
         self.screen = screen
 
     def update(self):
         if self.x < 0-self.image.get_width():
             self.x = self.screen.get_width()
-            self.y = random.randint(0, self.screen.get_height()-self.image.get_height())
+            self.y = random.randint(200, self.screen.get_height()-self.image.get_height())
         self.x -= self.speed
         self.rect.x = self.x
         self.rect.y = self.y
