@@ -11,9 +11,11 @@ class Grenade(pygame.sprite.Sprite):
         self.velocity = 2
         self.screen = screen
         self.boom_time = 0
+        self.sound = pygame.mixer.Sound("sounds/explosion.wav")
 
     def boom(self):
         self.boom_time = pygame.time.get_ticks()
+        self.sound.play()
 
 
     def update(self):

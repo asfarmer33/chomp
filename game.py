@@ -6,7 +6,6 @@ from helpers import *
 from fish import *
 from boat import Boat
 from grenade import Grenade
-from time import time
 
 pygame.init()
 

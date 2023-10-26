@@ -12,7 +12,7 @@ class Boat(pygame.sprite.Sprite):
         self.rect = self.imageL.get_rect()
         self.rect.x = screen.get_width()/2
         self.rect.y = 0
-        self.velocity = -1
+        self.velocity = -1.0
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
