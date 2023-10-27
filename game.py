@@ -34,7 +34,6 @@ boat_group = pygame.sprite.Group()
 boat_group.add(my_boat)
 
 # make grenade
-grenade = Grenade(screen, my_boat)
 grenade_group = pygame.sprite.Group()
 
 
@@ -51,12 +50,13 @@ while running:
                 my_boat.velocity -= 1
             if event.key == pygame.K_DOWN:
                 if len(grenade_group) < 4:
-                    grenade_group.add(Grenade(screen, my_boat))
+                    grenade_group.add(Grenade(screen, my_boat, fish_group))
             if event.key == pygame.K_SPACE:
                 [grenade.boom() for grenade in grenade_group]
 
 
-
+    if len(fish_group) < num_fish:
+        [fish_group.add(Fish(screen)) for n in range(num_fish - len(fish_group))]
 
 
     # updates
@@ -78,6 +78,6 @@ while running:
     grenade_group.draw(screen)
 
 
-    pygame.display.set_caption(f"Chomp {FPS.get_fps():3.2f}")
+    pygame.display.set_caption(f"Chomp {FPS.get_fps():3.2f} ------ {len(fish_group)}")
     pygame.display.flip()
     FPS.tick(60)

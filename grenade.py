@@ -1,8 +1,9 @@
 import pygame
+import math
 
 class Grenade(pygame.sprite.Sprite):
 
-    def __init__(self, screen, boat):
+    def __init__(self, screen, boat, fish_group):
         super().__init__()
         self.image = pygame.image.load("images/grenade.png")
         self.image = pygame.transform.scale(self.image, (40, 40))
@@ -12,10 +13,13 @@ class Grenade(pygame.sprite.Sprite):
         self.screen = screen
         self.boom_time = 0
         self.sound = pygame.mixer.Sound("sounds/explosion.wav")
+        self.fish_group = fish_group
 
     def boom(self):
-        self.boom_time = pygame.time.get_ticks()
-        self.sound.play()
+        if self.boom_time == 0:
+            self.boom_time = pygame.time.get_ticks()
+            self.kill_fish()
+            self.sound.play()
 
 
     def update(self):
@@ -45,3 +49,16 @@ class Grenade(pygame.sprite.Sprite):
         image = pygame.image.load(img)
         image = pygame.transform.scale(image, (40, 40))
         return image
+
+    def kill_fish(self):
+        # get location
+        x_g, y_g = self.rect.center
+
+        # loop over each fish in fish group
+        for fish in self.fish_group:
+            # get distance to fish
+            x_f, y_f = fish.rect.center
+            distance = math.sqrt((x_f-x_g)**2 + (y_f-y_g)**2)
+            # if fish is close, kill it
+            if distance < 60:
+                fish.kill()
