@@ -30,11 +30,12 @@ class Fish(pygame.sprite.Sprite):
             self.kill()
 
     def skeleton(self):
-        dead_imgs = ["images/fishTile_097.png", "images/fishTile_099.png", "images/fishTile_093.png", "images/fishTile_095.png"]
-        self.image = pygame.image.load(dead_imgs[self.randimg])
-        self.image = pygame.transform.flip(self.image, 1, 0)
-        self.dead_timer = pygame.time.get_ticks()
-        self.speed = 0
+        if self.speed != 0:
+            dead_imgs = ["images/fishTile_097.png", "images/fishTile_099.png", "images/fishTile_093.png", "images/fishTile_095.png"]
+            self.image = pygame.image.load(dead_imgs[self.randimg])
+            self.image = pygame.transform.flip(self.image, 1, 0)
+            self.dead_timer = pygame.time.get_ticks()
+            self.speed = 0
 
-        self.score[0] += 1
+            self.score[0] += 1
 
