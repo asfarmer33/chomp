@@ -3,11 +3,12 @@ import pygame
 
 class Fish(pygame.sprite.Sprite):
 
-    def __init__(self, screen):
+    def __init__(self, screen, score):
         super().__init__()
         images = ["images/fishTile_079.png", "images/fishTile_081.png", "images/fishTile_075.png", "images/fishTile_077.png"]
         self.speed = random.random()*5
-        self.image = pygame.image.load(images[random.randint(0,3)])
+        self.randimg = random.randint(0,3)
+        self.image = pygame.image.load(images[self.randimg])
         self.image = pygame.transform.flip(self.image, 1, 0)
         self.rect = self.image.get_rect()
         self.x = screen.get_width()
@@ -15,6 +16,8 @@ class Fish(pygame.sprite.Sprite):
         self.y = random.randint(100, screen.get_height() - self.image.get_height())
         self.rect.y = self.y
         self.screen = screen
+        self.dead_timer = 0
+        self.score = score # list with one item
 
     def update(self):
         if self.x < 0-self.image.get_width():
@@ -23,3 +26,15 @@ class Fish(pygame.sprite.Sprite):
         self.x -= self.speed
         self.rect.x = self.x
         self.rect.y = self.y
+        if self.dead_timer and pygame.time.get_ticks() - self.dead_timer > 300:
+            self.kill()
+
+    def skeleton(self):
+        dead_imgs = ["images/fishTile_097.png", "images/fishTile_099.png", "images/fishTile_093.png", "images/fishTile_095.png"]
+        self.image = pygame.image.load(dead_imgs[self.randimg])
+        self.image = pygame.transform.flip(self.image, 1, 0)
+        self.dead_timer = pygame.time.get_ticks()
+        self.speed = 0
+
+        self.score[0] += 1
+

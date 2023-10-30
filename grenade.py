@@ -14,6 +14,7 @@ class Grenade(pygame.sprite.Sprite):
         self.boom_time = 0
         self.sound = pygame.mixer.Sound("sounds/explosion.wav")
         self.fish_group = fish_group
+        self.collision_radius = 30
 
     def boom(self):
         if self.boom_time == 0:
@@ -24,6 +25,7 @@ class Grenade(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.y += self.velocity
+        self.check_fish_hit()
         if self.boom_time:
             if pygame.time.get_ticks() - self.boom_time > 0:
                 self.image = self.draw_image("images/explosion1.png")
@@ -51,14 +53,29 @@ class Grenade(pygame.sprite.Sprite):
         return image
 
     def kill_fish(self):
-        # get location
-        x_g, y_g = self.rect.center
-
-        # loop over each fish in fish group
         for fish in self.fish_group:
-            # get distance to fish
-            x_f, y_f = fish.rect.center
-            distance = math.sqrt((x_f-x_g)**2 + (y_f-y_g)**2)
-            # if fish is close, kill it
-            if distance < 60:
-                fish.kill()
+
+            if self.get_distance(self.rect.center, fish.rect.center) < 100:
+                fish.skeleton()
+
+
+    def get_distance(self, coord1, coord2):
+        x1, y1 = coord1
+        x2, y2 = coord2
+
+        return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+
+    def get_sprite_distance(self, sprite1, sprite2):
+        coord1 = sprite1.rect.center
+        coord2 = sprite2.rect.center
+        return (self.get_distance(coord1, coord2) < self.collision_radius)
+
+
+    def check_fish_hit(self):
+        hit_fish_list = pygame.sprite.spritecollide(self, self.fish_group, False, collided=self.get_sprite_distance)
+        if hit_fish_list:
+            for fish in hit_fish_list:
+                if fish.speed != 0:
+                    self.boom()
+        for fish in hit_fish_list:
+                fish.skeleton()
